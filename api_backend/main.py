@@ -7,17 +7,18 @@ import os
 app = Flask(__name__)
 
 BASE_API_URL = "https://economia.awesomeapi.com.br"
-API_KEY = "123"
-#API_KEY = os.getenv("API_KEY")
+API_KEY = os.getenv("API_KEY")
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def validate_api_key():
-    api_key = request.headers.get("X-API-KEY")
-    if not api_key or api_key != API_KEY:
-        logging.warning("Unauthorized access attempt")
-        return False
+    if os.getenv("FLASK_ENV") != "development" and os.getenv("API_KEY"):
+        api_key = request.headers.get("X-API-KEY")
+        if not api_key or api_key != os.getenv("API_KEY"):
+            logging.warning("Unauthorized access attempt")
+            return False
     return True
+    
 
 @app.route("/health", methods=["GET"])
 def health():

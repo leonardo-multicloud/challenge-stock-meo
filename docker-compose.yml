@@ -2,10 +2,12 @@ version: '3.8'
 
 services:
   api_backend:
-    image: leonardomulticloud/challenge-stock-meo-backend:v1.0
+    image: gcr.io/rare-gist-451920-p4/challenge-stock-meo:v1.0
     container_name: api_backend
     ports:
       - "8080:8080"
     environment:
-      - API_KEY=123
+      - API_KEY=
+      - FLASK_ENV=production #Utilize o valor development se quiser desativar API_KEY 
     restart: unless-stopped
+
