@@ -5,32 +5,37 @@ terraform {
       version = "6.22.0"
     }
   }
+  
+  backend "gcs" {
+      bucket = "state_challenge_stock"
+      prefix  = "terraform/state"
+  }
 }
 
 data "google_project" "project" {
-    project_id = "rare-gist-451920-p4"
+    project_id = "${var.project}"
 }
 
-resource "google_cloud_run_v2_service" "challenge_stock_meo_backend" {
-  name     = "challenge-meo"
-  location = "europe-west1"
+resource "google_cloud_run_v2_service" "v1" {
+  name     = "${var.google_cloud_run_name}"
+  location = "${var.google_cloud_run_region}"
   deletion_protection = false
   ingress = "INGRESS_TRAFFIC_ALL"
   project = data.google_project.project.project_id
 
   template {
     containers {
-      image = "gcr.io/rare-gist-451920-p4/challenge-stock-meo:v1.0"
+      image = "${var.google_cloud_run_image}"
       resources {
         limits = {
-          cpu    = "1"
-          memory = "512Mi"
+          cpu    = "${var.google_cloud_run_limit_cpu}"
+          memory = "${var.google_cloud_run_limit_mem}"
         }
       }
 
       env {
         name  = "API_KEY"
-        value = ""
+        value = "${var.google_cloud_run_api_key}"
       }
       env {
         name  = "FLASK_ENV"
@@ -43,13 +48,13 @@ resource "google_cloud_run_v2_service" "challenge_stock_meo_backend" {
 }
 
 resource "google_cloud_run_service_iam_binding" "default" {
-  location = google_cloud_run_v2_service.challenge_stock_meo_backend.location
-  service  = google_cloud_run_v2_service.challenge_stock_meo_backend.name
+  location = google_cloud_run_v2_service.v1.location
+  service  = google_cloud_run_v2_service.v1.name
   project = data.google_project.project.project_id
   role     = "roles/run.invoker"
   members = [
     "allUsers"
   ]
 
-  depends_on = [ google_cloud_run_v2_service.challenge_stock_meo_backend ]
+  depends_on = [ google_cloud_run_v2_service.v1 ]
 }
