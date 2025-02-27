@@ -1,6 +1,6 @@
-# Challenge Stock Meo Backend
+# Challenge Stock Nos Backend
 
-Este repositório contém o backend do projeto Challenge Stock Meo. Para facilitar o desenvolvimento e a execução do projeto, utilizamos o `make` para automatizar tarefas comuns, como a instalação de dependências, execução de testes, construção de imagens Docker e gerenciamento de containers.
+Este repositório contém o backend do projeto Challenge Stock Nos. Para facilitar o desenvolvimento e a execução do projeto, utilizamos o `make` para automatizar tarefas comuns, como a instalação de dependências, execução de testes, construção de imagens Docker e gerenciamento de containers.
 
 ## Local Development Guide
 

@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   api_backend:
-    image: gcr.io/rare-gist-451920-p4/challenge-stock-meo:v1.0
+    image: gcr.io/rare-gist-451920-p4/challenge-stock-nos:v1.0
     container_name: api_backend
     ports:
       - "8080:8080"

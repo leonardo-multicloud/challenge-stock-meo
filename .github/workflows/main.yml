@@ -9,7 +9,7 @@ env:
   PROJECT_ID: rare-gist-451920-p4
   REGION: us
   REGISTRY: gcr.io
-  IMAGE_NAME: challenge-stock-meo
+  IMAGE_NAME: challenge-stock-nos
   DOCKERFILE_LOCATION: ./api_backend/dockerfile
   DOCKERFILE_CONTEXT: ./api_backend
 
@@ -91,7 +91,7 @@ jobs:
       - id: 'deploy'
         uses: 'google-github-actions/deploy-cloudrun@v2'
         with:
-          service: 'challenge-meo'
+          service: 'challenge-nos'
           image: ${{ env.IMAGE_TAG }}
           region: europe-west1
           
